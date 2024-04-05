@@ -1,4 +1,5 @@
 spring.application.name: catalog-service
+
 server:
   port: 9001
   tomcat:
@@ -7,3 +8,7 @@ server:
     threads:
       max: 50
       min-spare: 5
+polar:
+  greeting: Welcome to the local book catalog!
+  test-data:
+    enable: true
