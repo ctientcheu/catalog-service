@@ -1,1 +1,0 @@
-from the book cloud native spring in action
