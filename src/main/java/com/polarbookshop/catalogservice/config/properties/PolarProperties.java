@@ -25,7 +25,7 @@ public class PolarProperties {
         this.greeting = greeting;
     }
 
-    public TestData getTestData() {
+    public TestData testData() {
         return testData;
     }
 
@@ -38,6 +38,10 @@ public class PolarProperties {
          * Create sample Book data when true, false by default.
          */
         private boolean enable = false;
+        /**
+         * Delete existing data and recreate.
+         */
+        private boolean override = false;
 
         public boolean isEnable() {
             return enable;
@@ -45,6 +49,14 @@ public class PolarProperties {
 
         public void setEnable(boolean enable) {
             this.enable = enable;
+        }
+
+        public boolean doOverride() {
+            return override;
+        }
+
+        public void setOverride(boolean override) {
+            this.override = override;
         }
     }
 }
