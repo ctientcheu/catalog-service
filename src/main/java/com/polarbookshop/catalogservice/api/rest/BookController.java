@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @org Cerebrau
  */
 @RestController
-@RequestMapping("books")
+@RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
 
