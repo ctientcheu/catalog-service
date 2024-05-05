@@ -25,8 +25,10 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .authorizeHttpRequests(authorize -> authorize.requestMatchers(GET, "/", "/books/**").permitAll())
-            .authorizeHttpRequests(authorize -> authorize.anyRequest().hasRole("employee"))
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/actuator/**").permitAll()
+                .requestMatchers(GET, "/", "/books/**").permitAll()
+                .anyRequest().hasRole("employee"))
             .oauth2ResourceServer(configurer -> configurer.jwt(withDefaults()))
             .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .csrf(AbstractHttpConfigurer::disable)
