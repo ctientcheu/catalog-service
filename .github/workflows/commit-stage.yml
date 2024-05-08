@@ -34,19 +34,20 @@ jobs:
           fail-build: false
           severity-cutoff: high
       - name: Upload vulnerability report
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v2
         if: success() || failure()
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
       - name: Validate Kubernetes manifests
-        uses: docker://ghcr.io/yannh/kubeconform:latest
+        uses: stefanprodan/kube-tools@v1
         with:
-          entrypoint: '/kubeconform'
-          args: "-summary -output json k8s/"
-
+          kubectl: 1.28.3
+          kubeval: 0.16.1
+          command: |
+            kubeval --strict -d k8s
   package:
     name: Package and Publish
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: [ build ]
     runs-on: ubuntu-22.04
     permissions:
@@ -65,7 +66,8 @@ jobs:
       - name: Build container image
         run: |
           chmod +x gradlew
-          ./gradlew bootBuildImage --imageName ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          ./gradlew bootBuildImage \
+            --imageName ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
       - name: OCI image vulnerability scanning
         uses: anchore/scan-action@v3
         id: scan
@@ -74,7 +76,7 @@ jobs:
           fail-build: false
           severity-cutoff: high
       - name: Upload vulnerability report
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v2
         if: success() || failure()
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
