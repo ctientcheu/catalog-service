@@ -31,7 +31,7 @@ class BookRepositoryJdbcTests {
 
     @Test
     void findBookByIsbnWhenExisting() {
-        var bookIsbn = "1234561237";
+        var bookIsbn = "1114561237";
         var book = Book.of(bookIsbn, "Title", "Author", 12.90, "TMC Inc");
         jdbcAggregateTemplate.insert(book);
 
@@ -43,7 +43,7 @@ class BookRepositoryJdbcTests {
 
     @Test
     void whenCreateBookNotAuthenticatedThenNoAuditMetadata() {
-        var bookToCreate = Book.of("1234567891", "Title", "Author", 12.90, "TMC Inc");
+        var bookToCreate = Book.of("4444567891", "Title", "Author", 12.90, "TMC Inc");
         var createdBook = bookRepository.save(bookToCreate);
 
         assertThat(createdBook.createdBy()).isNull();
@@ -53,7 +53,7 @@ class BookRepositoryJdbcTests {
     @Test
     @WithMockUser("john")
     void whenCreateBookAuthenticatedThenAuditMetadata() {
-        var bookToCreate = Book.of("1234567891", "Title", "Author", 12.90, "TMC Inc");
+        var bookToCreate = Book.of("3334567892", "Title", "Author", 13.90, "TMC Inc");
         var createdBook = bookRepository.save(bookToCreate);
 
         assertThat(createdBook.createdBy()).isEqualTo("john");
