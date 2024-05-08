@@ -58,3 +58,7 @@ polar:
   greeting: Welcome to the local book catalog!
   test-data:
     enable: true
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
