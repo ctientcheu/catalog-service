@@ -10,53 +10,48 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
  */
 @ConfigurationProperties(prefix = "polar")
 public class PolarProperties {
-    /**
-     * A message to welcome users
-     */
-    private String greeting;
-    @NestedConfigurationProperty
-    private TestData testData;
+  /** A message to welcome users */
+  private String greeting;
 
-    public String getGreeting() {
-        return greeting;
+  @NestedConfigurationProperty private TestData testData;
+
+  public String getGreeting() {
+    return greeting;
+  }
+
+  public void setGreeting(String greeting) {
+    this.greeting = greeting;
+  }
+
+  public TestData testData() {
+    return testData;
+  }
+
+  public void setTestData(TestData testData) {
+    this.testData = testData;
+  }
+
+  public static class TestData {
+    /** Create sample Book data when true, false by default. */
+    private boolean enable = false;
+
+    /** Delete existing data and recreate. */
+    private boolean override = false;
+
+    public boolean isEnable() {
+      return enable;
     }
 
-    public void setGreeting(String greeting) {
-        this.greeting = greeting;
+    public void setEnable(boolean enable) {
+      this.enable = enable;
     }
 
-    public TestData testData() {
-        return testData;
+    public boolean doOverride() {
+      return override;
     }
 
-    public void setTestData(TestData testData) {
-        this.testData = testData;
+    public void setOverride(boolean override) {
+      this.override = override;
     }
-
-    public static class TestData {
-        /**
-         * Create sample Book data when true, false by default.
-         */
-        private boolean enable = false;
-        /**
-         * Delete existing data and recreate.
-         */
-        private boolean override = false;
-
-        public boolean isEnable() {
-            return enable;
-        }
-
-        public void setEnable(boolean enable) {
-            this.enable = enable;
-        }
-
-        public boolean doOverride() {
-            return override;
-        }
-
-        public void setOverride(boolean override) {
-            this.override = override;
-        }
-    }
+  }
 }

@@ -15,16 +15,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnProperty(name = "polar.test-data.enable", havingValue = "true")
 public class TestDataConfig {
-    private final BookRepository bookRepository;
-    private final PolarProperties polarProperties;
+  private final BookRepository bookRepository;
+  private final PolarProperties polarProperties;
 
-    public TestDataConfig(BookRepository bookRepository, PolarProperties polarProperties) {
-        this.bookRepository = bookRepository;
-        this.polarProperties = polarProperties;
-    }
+  public TestDataConfig(BookRepository bookRepository, PolarProperties polarProperties) {
+    this.bookRepository = bookRepository;
+    this.polarProperties = polarProperties;
+  }
 
-    @Bean
-    public BookDataLoader bookDataLoader() {
-        return new BookDataLoader(bookRepository, polarProperties);
-    }
+  @Bean
+  public BookDataLoader bookDataLoader() {
+    return new BookDataLoader(bookRepository, polarProperties);
+  }
 }
